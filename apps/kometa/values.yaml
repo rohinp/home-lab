@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: metamanager/kometa
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+
+persistence:
+  enabled: true
+  hostPath: /cache-pool/kometa/config  # Specify the host path on the host machine
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+media:
+  moviesPath: /new-pool/media/movies      # Host path for movies
+  tvshowsPath: /new-pool/media/tvshows    # Host path for TV shows
+
+resources:
+  limits:
+    cpu: "1"
+    memory: "1Gi"
+  requests:
+    cpu: "500m"
+    memory: "512Mi"

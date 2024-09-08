@@ -1,0 +1,5 @@
+apiVersion: v2
+name: kometa
+description: Kometa Media Manager Helm Chart
+version: 0.1.0
+appVersion: "latest"
