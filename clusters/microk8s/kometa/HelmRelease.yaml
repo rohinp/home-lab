@@ -9,7 +9,7 @@ spec:
       chart: ./apps/kometa
       sourceRef:
         kind: GitRepository
-        name: home-lab-repo
+        name: home-lab
         namespace: flux-system
   values:
     replicaCount: 1
