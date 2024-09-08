@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: home-lab-repo  # Name of the GitRepository resource
+  name: home-lab  # Name of the GitRepository resource
   namespace: flux-system
 spec:
   interval: 1m
