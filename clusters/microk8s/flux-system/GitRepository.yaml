@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: home-lab-repo  # Name of the GitRepository resource
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/rohinp/home-lab  # URL to your GitHub repo
+  ref:
+    branch: main  # The branch that Flux will sync
+  secretRef:
+    name: flux-system  # The secret containing the GitHub token (if using private repos)
