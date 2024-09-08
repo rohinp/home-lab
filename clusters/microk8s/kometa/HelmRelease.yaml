@@ -4,6 +4,7 @@ metadata:
   name: kometa
   namespace: default
 spec:
+  interval: 1m
   chart:
     spec:
       chart: ./apps/kometa

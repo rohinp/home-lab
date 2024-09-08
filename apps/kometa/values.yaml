@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: metamanager/kometa
+  repository: kometateam/kometa
   tag: latest
   pullPolicy: Always
 
