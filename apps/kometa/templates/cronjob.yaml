@@ -4,19 +4,25 @@ metadata:
   name: kometa-cronjob
   namespace: default
 spec:
-  schedule: "0 3 * * *"  # This runs at 3 AM daily
+  schedule: "{{ .Values.schedule }}"  # Uses the schedule from values.yaml
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: kometa
-            image: kometateam/kometa:latest
+            image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
             env:
               - name: PLEX_URL
-                value: "{{ .Values.plex.url }}"
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secretEnv.plex.url.name }}  # Reference the Secret for Plex URL
+                    key: {{ .Values.secretEnv.plex.url.key }}    # The key in the Secret
               - name: PLEX_TOKEN
-                value: "{{ .Values.plex.token }}"
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secretEnv.plex.token.name }}  # Reference the Secret for Plex token
+                    key: {{ .Values.secretEnv.plex.token.key }}    # The key in the Secret
               - name: MOVIES_DIR
                 value: "{{ .Values.media.moviesPath }}"
               - name: TVSHOWS_DIR
@@ -25,9 +31,9 @@ spec:
                 value: "{{ .Values.metadata.fetchInterval }}"
             volumeMounts:
               - name: movies-volume
-                mountPath: /new-pool/media/movies
+                mountPath: /media/movies
               - name: tvshows-volume
-                mountPath: /new-pool/media/tvshows
+                mountPath: /media/tvshows
           volumes:
           - name: movies-volume
             hostPath:

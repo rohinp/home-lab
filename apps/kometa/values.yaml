@@ -5,3 +5,7 @@ media:
   tvshowsPath: /new-pool/media/tvshows        # Path to your TV shows directory
 metadata:
   fetchInterval: "24h"               # How frequently Kometa fetches metadata
+image:
+  repository: kometateam/kometa      # Correct image
+  tag: latest
+  pullPolicy: Always

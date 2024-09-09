@@ -4,25 +4,30 @@ metadata:
   name: kometa
   namespace: default
 spec:
-  interval: 1m
+  interval: 1m  # Reconcile every minute
   chart:
     spec:
       chart: ./apps/kometa  # Path to the Helm chart for Kometa
       sourceRef:
         kind: GitRepository
-        name: home-lab  # The GitRepository resource
+        name: home-lab
         namespace: flux-system
   values:
     replicaCount: 1
-    persistence:
-      size: 10Gi
-      accessMode: ReadWriteOnce
-      storageClass: microk8s-hostpath
     media:
-      moviesPath: /new-pool/media/movies
-      tvshowsPath: /new-pool/media/tvshows
-    plex:
-      url: "http://192.168.1.2:32400"
-      token: "Z1-9suDV6Q9vEbnseeNr"
+      moviesPath: /media/movies
+      tvshowsPath: /media/tvshows
     metadata:
       fetchInterval: "24h"
+    image:
+      repository: kometateam/kometa  # Correct image repository
+      tag: latest                    # Specify the tag
+      pullPolicy: Always
+    secretEnv:  # Section to handle secret values
+      plex:
+        url:
+          name: kometa-secrets
+          key: PLEX_URL
+        token:
+          name: kometa-secrets
+          key: PLEX_TOKEN
