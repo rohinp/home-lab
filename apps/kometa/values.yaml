@@ -1,28 +1,7 @@
 replicaCount: 1
-
-image:
-  repository: kometateam/kometa
-  tag: latest
-  pullPolicy: IfNotPresent
-
-service:
-  type: ClusterIP
-  port: 80
-
-persistence:
-  enabled: true
-  hostPath: /cache-pool/kometa/config  # Specify the host path on the host machine
-  accessMode: ReadWriteOnce
-  size: 10Gi
-
+schedule: "0 3 * * *"               # CronJob schedule
 media:
-  moviesPath: /new-pool/media/movies      # Host path for movies
-  tvshowsPath: /new-pool/media/tvshows    # Host path for TV shows
-
-resources:
-  limits:
-    cpu: "1"
-    memory: "1Gi"
-  requests:
-    cpu: "500m"
-    memory: "512Mi"
+  moviesPath: /new-pool/media/movies          # Path to your movies directory
+  tvshowsPath: /new-pool/media/tvshows        # Path to your TV shows directory
+metadata:
+  fetchInterval: "24h"               # How frequently Kometa fetches metadata

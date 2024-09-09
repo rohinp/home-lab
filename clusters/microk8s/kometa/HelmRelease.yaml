@@ -7,10 +7,10 @@ spec:
   interval: 1m
   chart:
     spec:
-      chart: ./apps/kometa
+      chart: ./apps/kometa  # Path to the Helm chart for Kometa
       sourceRef:
         kind: GitRepository
-        name: home-lab
+        name: home-lab  # The GitRepository resource
         namespace: flux-system
   values:
     replicaCount: 1
@@ -18,5 +18,11 @@ spec:
       size: 10Gi
       accessMode: ReadWriteOnce
       storageClass: microk8s-hostpath
-    service:
-      port: 80
+    media:
+      moviesPath: /new-pool/media/movies
+      tvshowsPath: /new-pool/media/tvshows
+    plex:
+      url: "http://192.168.1.2:32400"
+      token: "Z1-9suDV6Q9vEbnseeNr"
+    metadata:
+      fetchInterval: "24h"

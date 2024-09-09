@@ -1,13 +1,17 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: kometa-app
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./clusters/microk8s/kometa
+  path: ./clusters/microk8s/kometa     # Path to the Kometa configuration
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-lab
   validation: client
+  # Include secrets in the managed resources
+  resources:
+    - ./clusters/microk8s/kometa/kometa-secrets.yaml
+    - ./clusters/microk8s/kometa/kometa-cronjob.yaml

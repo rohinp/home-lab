@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kometa-cronjob
+  namespace: default
+spec:
+  schedule: "0 3 * * *"  # This runs at 3 AM daily
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: kometa
+            image: kometateam/kometa:latest
+            env:
+              - name: PLEX_URL
+                value: "{{ .Values.plex.url }}"
+              - name: PLEX_TOKEN
+                value: "{{ .Values.plex.token }}"
+              - name: MOVIES_DIR
+                value: "{{ .Values.media.moviesPath }}"
+              - name: TVSHOWS_DIR
+                value: "{{ .Values.media.tvshowsPath }}"
+              - name: FETCH_INTERVAL
+                value: "{{ .Values.metadata.fetchInterval }}"
+            volumeMounts:
+              - name: movies-volume
+                mountPath: /new-pool/media/movies
+              - name: tvshows-volume
+                mountPath: /new-pool/media/tvshows
+          volumes:
+          - name: movies-volume
+            hostPath:
+              path: "{{ .Values.media.moviesPath }}"
+              type: Directory
+          - name: tvshows-volume
+            hostPath:
+              path: "{{ .Values.media.tvshowsPath }}"
+              type: Directory
+          restartPolicy: OnFailure
