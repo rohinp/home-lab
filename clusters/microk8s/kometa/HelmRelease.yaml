@@ -4,7 +4,7 @@ metadata:
   name: kometa
   namespace: default
 spec:
-  interval: 1m  # Reconcile every minute
+  interval: 5m  # Reconcile every minute
   chart:
     spec:
       chart: ./apps/kometa  # Path to the Helm chart for Kometa
