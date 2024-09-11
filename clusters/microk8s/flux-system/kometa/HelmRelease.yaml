@@ -31,3 +31,6 @@ spec:
         token:
           name: kometa-secrets
           key: PLEX_TOKEN
+    # Add the imagePullSecrets to use Docker Hub credentials
+    imagePullSecrets:
+    - name: dockerhub-secret  # This should be the name of the secret you created
